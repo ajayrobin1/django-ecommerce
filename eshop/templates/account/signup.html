@@ -1,0 +1,67 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+
+{% load widget_tweaks %}
+
+
+
+
+{% block head_title %}{% endblock %}
+
+{% block title %} E-Shop |{% trans "Signup" %}{% endblock %}
+
+
+{% block content %}
+    
+     
+ 
+
+<h3 class="pt-4 text-2xl text-center">{% trans "Sign Up" %}</h3>
+
+
+<div class="container mx-auto flex flex-col items-center m-3">
+    
+
+<form class="signup shadow-lg w-80 p-4 flex flex-col bg-white rounded-lg" id="signup_form" method="post" action="{% url 'account_signup' %}">
+  {% csrf_token %}
+  
+  {% comment %} {{ form.as_p }} {% endcomment %}
+
+  
+
+
+  {% with WIDGET_ERROR_CLASS='is-invalid' WIDGET_VALID_CLASS="is-valid" %}
+  <div class="text-red-500 text-xs italic">{{form.errors.email}}</div>
+
+  {% render_field form.email class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-8 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md mt-3 mb-3"  type="text" %}
+  
+  <div class="text-red-500 text-xs italic">{{form.errors.password1}}</div>
+  {% render_field form.password1 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-8 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md mt-3 mb-3"  type="password" %}
+
+
+  <div class="text-red-500 text-xs italic">{{form.errors.password2}}</div>
+  {% render_field form.password2 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-8 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md mt-3 mb-3"  type="password" %}
+
+
+  <div class="text-red-500 text-xs italic">{{form.errors.username}}</div>
+  {% render_field form.username class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-8 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md mt-3 mb-3"  type="text" %}
+
+  <div class="text-red-500 text-xs italic">{{form.non_field_errors}} </div>
+
+
+  
+
+  {% endwith %}
+
+
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  <button class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out m-3" type="submit">{% trans "Sign Up" %}</button>
+
+  <p class="p-3">{% blocktrans %}Already have an account? Then please <a class="text-blue-400 text-center my-2" href="{{ login_url }}">log in</a>.{% endblocktrans %}</p>
+ 
+</div>
+
+{% endblock %}

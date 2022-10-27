@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <title>{% block title %}  {% endblock %}</title>
+
+    <link rel="icon" href="{% static 'icon.png' %}">
+</head>
+<body>
+
+    {% include "includes/navbar.html" %}
+    {% if messages %}
+    <div>
+        <ul>
+            {% for message in messages %}
+            <div class="{{ message.tags }} flex bg-green-100 rounded-lg text-sm text-green-700" role="alert">
+                <svg class="w-5 h-5 inline mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                
+            <li>{{message}}</li>
+  
+               
+            </div>
+            {% endfor %}
+        </ul>
+    </div>
+  {% endif %}
+
+
+    {% block content %}{% endblock %}
+    
+
+    {% block body %} {% endblock %}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+    
+    <script src="{% static 'js/main.js' %}"></script>  
+    <style src="{% static 'css/style.js' %}"></style>  
+</body>
+</html>

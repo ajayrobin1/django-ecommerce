@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% load thumbnail %}
+
+
+{% block title %} E-Shop | {{ user.username }} {% endblock %}
+
+
+
+
+{% block body %}
+  <div class=" bg-white rounded overflow-hidden w-1/2 mx-auto mt-2 shadow-lg">
+    
+        {% if profile.image %}
+        {% thumbnail profile.image "240x240" crop="center" as im %}
+        
+        <img alt="..." src="{{ im.url }}" class=" h-36 w-36 text-white rounded-full mx-auto">
+        {% endthumbnail %}
+        <div class=" text-center p-6 border-b">
+            <button  onclick="openModal('modal')" class="hover:shadow-form rounded-md bg-blue-500 px-5 py-2 text-center text-base text-white outline-none mx-auto">Uplaod Image</button>
+            </div>
+        {% else %}
+        <img alt="Upload profile picture" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="h-36 w-36 text-white rounded-full mx-auto">
+        <div class=" text-center p-6 border-b">
+        <button  onclick="openModal('modal')" class="hover:shadow-form rounded-md bg-blue-500 px-5 py-2 text-center text-base text-white outline-none mx-auto">Uplaod Image</button>
+        </div>
+        {% endif %}
+    
+    <div class=" text-center p-6 border-b">
+    <p class="pt-2 text-lg font-semibold text-gray-800 m-3">{{ user.first_name }} {{ user.last_name }}</p>
+      <p class="text-sm text-gray-800">@{{ user.username }}</p>
+    <div class="m-3 mt-5 ">
+          <a
+          href="{% url 'profile:update' profile.id %}"
+          class="border border-gray-800 rounded-full py-2 px-4 text-xs font-semibold text-gray-800"
+          >
+          Manage your Account
+          </a>
+      </div>
+      </div>
+      <div class="border-b p-3 m-3">
+          <Link href="/account/campaigns" >
+              <a class="px-4 py-2 flex">
+                  <div class="pl-3  mb-4">
+                  <p class="text-lg font-medium text-gray-800 leading-none">
+                      Email:
+                  </p>
+                  <p class="text-m text-gray-500 p-3">{{ user.email }}</p>
+                  </div>
+              </a>
+          </Link>
+          <Link href="/account/campaigns" >
+            <a class="px-4 py-2 flex">
+                <div class="pl-3  mb-4">
+                <p class="text-lg font-medium text-gray-800 leading-none">
+                    Your Address:
+                </p> 
+
+                <p class="text-m text-gray-500 p-3">{{ profile.address|linebreaks }}</p>
+                </div>
+            </a>
+        </Link>
+          <Link href="/account/donations" >
+              <a class="px-4 py-2 flex">
+                  <div class="pl-3 mb-4">
+                  <p class="text-lg font-medium text-gray-800 leading-none">Joined on:</p>
+                  <p class="text-m text-gray-500 p-3">{{ profile.date }}</p>
+                  </div>
+              </a>
+          </Link>
+      </div>
+  </div>
+    </div>
+      
+    </div>
+</div>
+{% endblock %}

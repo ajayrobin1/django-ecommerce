@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+
+{% block title %} E-Shop | {{ product.name }}{% endblock %}
+
+
+{% block body %}
+
+<div class="flex flex-wrap justify-center">
+{% thumbnail product.image "300x300" crop="center" as im %}
+  <img src="{{ im.url }}" class="p-1 bg-white border rounded max-w-sm">
+{% endthumbnail %}
+</div>
+    
+
+<div class='flex items-center justify-center m-3'>  
+  <div class="rounded-xl border p-2 shadow-md w-9/12 bg-white">
+  <div class="flex w-full items-center justify-between border-b pb-3">
+    <div class="flex items-center space-x-3">
+      <div class="text-lg font-bold text-slate-700">{{ product.name }}</div>
+    </div>
+    <div class="flex items-center space-x-8">
+      <button class="rounded-2xl border bg-neutral-100 px-3 py-1 text-xs font-semibold">Category</button>
+      <div class="text-xs text-neutral-500">{{ product.date }}</div>
+    </div>
+  </div>
+
+  <div class="mt-4 mb-6">
+    <div class="m-1 text-xl font-bold">Discription</div>
+    <div class="m-3 text-sm text-neutral-600">{{ product.discription }}</div>
+    <div class="m-1 text-xl font-bold">Price</div>
+    <div class="m-3 text-sm text-neutral-600">Rs. {{ product.price }}/-</div>
+    <div class="m-1 text-m font-bold">Posted by</div>
+    <div class="m-3 text-sm text-neutral-600"> {{ product.seller }}</div>
+  </div>
+  </div>
+  </div>
+
+   
+
+</div>
+<div class="flex space-x-2 justify-center p-6">
+  {% if buy_link %}
+  <button
+    type="button"
+    data-mdb-ripple="true"
+    data-mdb-ripple-color="light"
+    class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+  >Buy Now</button>
+  <button
+    type="button"
+    data-mdb-ripple="true"
+    data-mdb-ripple-color="light"
+    data-action="{% if in_cart %}remove{% else %}add{% endif %}-item"
+    data-name="{{ product.name }}"
+    data-url="{% url 'profile:addcart' product.id %}"
+    class="inline-block px-6 py-2.5 bg-green-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out  js-add-item"
+  > <p  class="js-cart-text"> {% if in_cart %} Remove {% else %} Add to cart {% endif %}</p>
+</button>
+{% else %}
+<button
+type="button"
+data-mdb-ripple="true"
+data-mdb-ripple-color="light"
+data-remove-url="{% url 'product:delete' product.id %}"
+data-name="{{ product.name }}"
+class="js-remove-product inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+>Remove Product</button>
+{% endif %}
+</div>
+
+
+  {% endblock %}
