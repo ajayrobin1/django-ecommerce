@@ -29,6 +29,17 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'basic',
+        'height': 300,
+        'width': 600,
+        'mathJaxLib': '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML',
+      'extraPlugins': ','.join(['mathjax',]),  
+    },
+}
+
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'
@@ -46,6 +57,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     'products',
+    'rating',
     'sorl.thumbnail',
     'widget_tweaks',
     'allauth',
@@ -53,7 +65,19 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'profiles',
     'cart',
+     'tailwind',
+     'ckeditor',
+    'ckeditor_uploader',
+      'theme',
+        'django_browser_reload',
 ]
+TAILWIND_APP_NAME = 'theme'
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
+NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
+
 SITE_ID = 1
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
@@ -76,6 +100,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+      "django_browser_reload.middleware.BrowserReloadMiddleware",
 
 ]
 

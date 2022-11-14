@@ -6,18 +6,20 @@
 
 {% block body %}
 
-<div class="flex flex-wrap justify-center">
-{% thumbnail product.image "300x300" crop="center" as im %}
-  <img src="{{ im.url }}" class="p-1 bg-white border rounded max-w-sm">
+
+
+<div class="flex flex-wrap relative justify-center">
+{% thumbnail product.image "600x400" crop="center" as im %}
+  <img src="{{ im.url }}" class="bg-white p-6 rounded max-w-sm">
 {% endthumbnail %}
 </div>
     
 
-<div class='flex items-center justify-center m-3'>  
-  <div class="rounded-xl border p-2 shadow-md w-9/12 bg-white">
-  <div class="flex w-full items-center justify-between border-b pb-3">
+<div class='flex items-center justify-center m-3 '>  
+  <div class="rounded-xl border p-2 shadow-md w-1/2 bg-white">
+  <div class="flex w-full items-center justify-between border-b  pb-3">
     <div class="flex items-center space-x-3">
-      <div class="text-lg font-bold text-slate-700">{{ product.name }}</div>
+      <div class="text-lg font-bold text-slate-700 px-6">{{ product.name }}</div>
     </div>
     <div class="flex items-center space-x-8">
       <button class="rounded-2xl border bg-neutral-100 px-3 py-1 text-xs font-semibold">Category</button>
@@ -26,12 +28,23 @@
   </div>
 
   <div class="mt-4 mb-6">
-    <div class="m-1 text-xl font-bold">Discription</div>
-    <div class="m-3 text-sm text-neutral-600">{{ product.discription }}</div>
-    <div class="m-1 text-xl font-bold">Price</div>
-    <div class="m-3 text-sm text-neutral-600">Rs. {{ product.price }}/-</div>
-    <div class="m-1 text-m font-bold">Posted by</div>
-    <div class="m-3 text-sm text-neutral-600"> {{ product.seller }}</div>
+    <div class="text-lg font-medium text-gray-800 leading-none px-5">Discription</div>
+    <div class="m-3 text-sm text-neutral-600 px-6">{{ product.discription|safe }}</div>
+    <div class="text-lg font-medium text-gray-800 leading-none px-5">Price</div>
+    <div class="m-3 text-sm text-neutral-600 px-6">Rs. {{ product.price }}/-</div>
+    <div class="text-lg font-medium text-gray-800 leading-none px-5">Rating</div>
+    <div class="m-3 text-sm text-neutral-600 px-6">
+     
+      {% include "includes/rating.html" %}   
+      <p class="w-5 h-5 mx-5">
+
+        ({{ length }})
+        </p>
+        
+
+    </div>
+    <div class="text-lg font-medium text-gray-800 leading-none px-5">Posted by</div>
+    <div class="m-3 text-sm text-neutral-600 px-6"> {{ product.seller }}</div>
   </div>
   </div>
   </div>
@@ -39,8 +52,9 @@
    
 
 </div>
-<div class="flex space-x-2 justify-center p-6">
+
   {% if buy_link %}
+  <div class="flex space-x-2 justify-center p-6">
   <button
     type="button"
     data-mdb-ripple="true"
@@ -57,7 +71,65 @@
     class="inline-block px-6 py-2.5 bg-green-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out  js-add-item"
   > <p  class="js-cart-text"> {% if in_cart %} Remove {% else %} Add to cart {% endif %}</p>
 </button>
+</div>
+
+<div class='flex items-center justify-center m-3 '>  
+  <div class="rounded-xl border p-2 shadow-md w-1/2 bg-white">
+  <div class="flex w-full items-center justify-between  px-1">
+
+Rate this product
+
+{% comment %} <input placeholder="Rate on 1-5" type="text" class="js-rating rounded-lg">
+ {% endcomment %}
+
+ 
+
+ <div class="flex item-center mt-2" >
+<input type="radio" id="rating-1" name="rating" value="1" /><label for="rating-1">
+  <svg class="w-5 h-5 fill-current text-green-500" viewBox="0 0 24 24">
+    <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z"/>
+   </svg>
+ </label>
+<input type="radio" id="rating-2" name="rating" value="2" /><label for="rating-2">
+  <svg class="w-5 h-5 fill-current text-green-500" viewBox="0 0 24 24">
+    <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z"/>
+   </svg>
+ </label>
+<input type="radio" id="rating-3" name="rating" value="3" /><label for="rating-3">
+  <svg class="w-5 h-5 fill-current text-green-500" viewBox="0 0 24 24">
+    <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z"/>
+   </svg>
+ </label>
+<input type="radio" id="rating-4" name="rating" value="4" /><label for="rating-4">
+  <svg class="w-5 h-5 fill-current text-green-500" viewBox="0 0 24 24">
+    <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z"/>
+   </svg>
+ </label>
+ <input type="radio" id="rating-5" name="rating" value="5" /><label for="rating-5">
+  <svg class="w-5 h-5 fill-current text-green-500" viewBox="0 0 24 24">
+    <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z"/>
+   </svg>
+ </label>
+</div>
+
+<button
+    type="button"
+    data-mdb-ripple="true"
+    data-mdb-ripple-color="light"
+    data-name={{ product.name }}
+    data-post-url={% url 'rating:submit' product.id  %}
+    class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out js-rating-submit"
+  >Rate</button>
+
+</div>
+</div>
+</div>
+
+
+
 {% else %}
+{% if request.user.is_authenticated %}
+<div class="flex space-x-2 justify-center p-6">
 <button
 type="button"
 data-mdb-ripple="true"
@@ -66,8 +138,11 @@ data-remove-url="{% url 'product:delete' product.id %}"
 data-name="{{ product.name }}"
 class="js-remove-product inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
 >Remove Product</button>
-{% endif %}
 </div>
 
 
-  {% endblock %}
+{% else %}
+<p class="m-3 text-sm text-neutral-600 px-6">Log in to buy this product<p>
+{% endif %}
+{% endif %}
+{% endblock %}

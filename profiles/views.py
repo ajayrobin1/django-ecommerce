@@ -104,7 +104,6 @@ class AddCartView(LoginRequiredMixin, View):
                 cart = None
 
             if cart:
-                
                 cart.delete()
                 messages.add_message(request, messages.INFO, 'Item removed fron the cart')
 

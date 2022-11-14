@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load thumbnail %}
+
 {% block title %} E-Shop |Your cart{% endblock %}
 
 
@@ -8,6 +10,7 @@
 
 
 <!-- component -->
+{% if cart_list %}
 <script defer src="https://unpkg.com/alpinejs@3.10.2/dist/cdn.min.js"></script>
 
 <section class="antialiased bg-gray-100 text-gray-600 h-screen" x-data="app">
@@ -93,6 +96,22 @@
         </div>
     </div>
 </section>
+{% else %}
+
+
+<div class="bg-gray-100" >
+        <div class="mx-auto w-1/2 text-center bg-white shadow-lg rounded-sm border border-gray-200">
+            <div class="mx-auto text-center text-xl font-bold p-6"> Your cart is empty</div>
+                {% thumbnail "https://img.freepik.com/free-vector/empty-concept-illustration_114360-1188.jpg" "600x400" crop="center" as im %}
+                <img src="{{ im.url }}" class="rounded max-w-sm mx-auto">
+                {% endthumbnail %}
+    </div>
+</div>
+
+
+
+
+{% endif %}
 
 
 {% endblock %}

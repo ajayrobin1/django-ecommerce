@@ -3,6 +3,10 @@ from django.shortcuts import render
 from django.http import JsonResponse, HttpResponseBadRequest
 
 from cart.models import Cart
+from rating.models import Rating
+
+
+
 from .models import Product
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -20,8 +24,22 @@ class HomePage(TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        products = Product.objects.all().order_by('-id')[0:30]
-        print(len(products))
+    
+        products=Product.objects.all().order_by('-id')[0:30]
+
+        if self.request.user.is_authenticated:
+
+            user_cart_list=Cart.objects.filter(added_by=self.request.user)
+        
+            cart_list=Product.objects.filter(added_product__in=user_cart_list)   
+
+        
+            for item in products:
+               if item in cart_list:
+                item.in_cart=True
+               else:
+                    item.in_cart=False
+
         if len(products)==0:
             empty=True
         else:
@@ -62,16 +80,30 @@ class DeleteProduct(LoginRequiredMixin, View):
         })
 
 
-       
+
+
 
 class ProductDetail(DetailView):
     http_method_names = ["get","post"]
     template_name = "product/detail.html"
     model = Product
     context_object_name = "product"
+    
     def get_context_data(self, **kwargs):
         product = self.get_object()
         context = super().get_context_data(**kwargs)
+        rating_list=Rating.objects.filter(rated_product=product)
+        rating=0.0
+        for data in rating_list:
+            rating=rating+data.rating
+        length=len(rating_list)
+        try:
+            rating=(rating/length)
+        except:
+            rating=0
+        product.rating=rating
+        product.save()
+        context['length']=length
         if self.request.user.is_authenticated:
             val= Cart.objects.filter(added_product=product, added_by=self.request.user).exists()
             context['in_cart'] =val
